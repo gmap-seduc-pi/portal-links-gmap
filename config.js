@@ -13,6 +13,6 @@
    NUNCA coloque aqui a chave "service_role".
    ===================================================================== */
 window.PORTAL_CONFIG = {
-  SUPABASE_URL: "https://mdgphtfoodhcdijkrvtf.supabase.co/rest/v1/",
+  SUPABASE_URL: "https://mdgphtfoodhcdijkrvtf.supabase.co",
   SUPABASE_ANON_KEY: "sb_publishable_wtVYsJwFpipbSVXKcsFtsw_CEvmOQZ9"
 };
