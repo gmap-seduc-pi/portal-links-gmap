@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Links da GMAP | SEDUC-PI</title>
+<meta name="description" content="Portal de Links da GMAP: acesso aos sistemas, planilhas e ferramentas da Gerência de Material e Patrimônio da SEDUC-PI.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+/* Fonte oficial Montserrat (SIL Open Font License), incorporada para não depender de serviço externo */
+@font-face{font-family:Montserrat;font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontes/montserrat-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Montserrat;font-style:normal;font-weight:500;font-display:swap;src:url(assets/fontes/montserrat-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Montserrat;font-style:normal;font-weight:600;font-display:swap;src:url(assets/fontes/montserrat-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Montserrat;font-style:normal;font-weight:700;font-display:swap;src:url(assets/fontes/montserrat-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Montserrat;font-style:normal;font-weight:800;font-display:swap;src:url(assets/fontes/montserrat-latin-800-normal.woff2) format("woff2")}
+:root{
+  /* Cores oficiais do Manual de Identidade Visual do Governo do Piauí (2023) */
+  --azul:#034ea2; --azul-escuro:#023b7b; --azul-claro:#e8f0fa;
+  --amarelo:#fdb913; --laranja:#ef4123; --verde:#007932; --preto:#231f20;
+  --fundo:#f3f5f9; --superficie:#ffffff; --borda:#e1e6ee; --borda-forte:#cdd5e1;
+  --texto:#231f20; --texto-2:#4d5562; --texto-3:#6b7380;
+  --alerta-bg:#fff4d6; --alerta-tx:#7a5300;
+  --perigo:#c62f15; --perigo-bg:#fdeae6;
+  --sucesso-bg:#e3f3ea;
+  --raio:12px; --raio-sm:8px;
+  --sombra:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+  --sombra-hover:0 8px 24px rgba(3,78,162,.14);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;color:var(--texto);background:var(--fundo);min-height:100vh;display:flex;flex-direction:column}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--azul)}
+.icone{width:1.15em;height:1.15em;flex:none;display:inline-block;vertical-align:-.2em}
+.oculto{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+
+/* ---------- Topo ---------- */
+.topo{background:var(--superficie);border-bottom:1px solid var(--borda)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
+.marca img{height:64px;width:auto;display:block}
+.topo-acoes{display:flex;align-items:center;gap:10px}
+.usuario{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--texto-2);background:var(--azul-claro);padding:6px 12px;border-radius:999px;max-width:260px}
+.usuario span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- Botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:var(--raio-sm);padding:9px 16px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,border-color .15s,box-shadow .15s}
+.btn-primario{background:var(--azul);color:#fff}
+.btn-primario:hover{background:var(--azul-escuro)}
+.btn-destaque{background:var(--amarelo);color:var(--preto)}
+.btn-destaque:hover{background:#f0ab00}
+.btn-sec{background:var(--superficie);border-color:var(--borda-forte);color:var(--texto)}
+.btn-sec:hover{border-color:var(--azul);color:var(--azul)}
+.btn-fantasma{background:transparent;color:var(--texto-2)}
+.btn-fantasma:hover{background:var(--fundo);color:var(--azul)}
+.btn-perigo{background:var(--perigo);color:#fff}
+.btn-perigo:hover{background:#a8240e}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn-icone{padding:8px;border-radius:8px}
+
+/* ---------- Faixa principal ---------- */
+.hero{background:var(--azul);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-80px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),rgba(255,255,255,0) 65%);pointer-events:none}
+.hero .wrap{padding-top:40px;padding-bottom:44px;position:relative;z-index:1}
+.sobretitulo{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amarelo);margin:0 0 8px}
+.hero h1{font-size:clamp(26px,4vw,38px);line-height:1.15;font-weight:800;margin:0 0 8px;letter-spacing:-.01em}
+.hero p.lead{margin:0 0 24px;font-size:16px;color:rgba(255,255,255,.86);max-width:620px}
+.busca{position:relative;max-width:680px}
+.busca .icone{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--texto-3);width:20px;height:20px}
+.busca input{width:100%;border:0;border-radius:var(--raio);padding:16px 56px 16px 52px;font-size:16px;background:#fff;color:var(--texto);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.busca input::placeholder{color:var(--texto-3)}
+.busca input:focus{outline:3px solid var(--amarelo);outline-offset:0}
+.busca kbd{position:absolute;right:16px;top:50%;transform:translateY(-50%);font:600 12px Montserrat,sans-serif;color:var(--texto-3);border:1px solid var(--borda-forte);border-radius:6px;padding:2px 8px;background:var(--fundo)}
+.faixa-cores{display:grid;grid-template-columns:3fr 2fr 2fr 3fr;height:6px}
+.faixa-cores i:nth-child(1){background:var(--azul-escuro)}
+.faixa-cores i:nth-child(2){background:var(--amarelo)}
+.faixa-cores i:nth-child(3){background:var(--laranja)}
+.faixa-cores i:nth-child(4){background:var(--verde)}
+
+/* ---------- Conteúdo ---------- */
+main{flex:1}
+main .wrap{padding-top:28px;padding-bottom:56px}
+.aviso-demo{display:flex;gap:10px;align-items:flex-start;background:var(--alerta-bg);color:var(--alerta-tx);border:1px solid #f3d27a;border-radius:var(--raio-sm);padding:12px 14px;font-size:13.5px;margin-bottom:22px}
+.aviso-demo .icone{margin-top:2px}
+
+.bloco-titulo{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-2);margin:0 0 12px}
+.populares{margin-bottom:28px}
+.populares-lista{display:flex;flex-wrap:wrap;gap:10px}
+.pilula{display:inline-flex;align-items:center;gap:10px;background:var(--superficie);border:1px solid var(--borda);border-radius:999px;padding:6px 14px 6px 6px;text-decoration:none;color:var(--texto);font-weight:600;font-size:14px;box-shadow:var(--sombra);transition:border-color .15s,transform .15s;max-width:100%}
+.pilula:hover{border-color:var(--azul);transform:translateY(-1px)}
+.pilula .mini{width:30px;height:30px;border-radius:999px;display:grid;place-items:center;flex:none}
+.pilula .mini .icone{width:16px;height:16px}
+.pilula .nome{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pilula small{color:var(--texto-3);font-weight:500}
+
+.barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.abas{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px;max-width:100%}
+.aba{border:1px solid var(--borda);background:var(--superficie);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--texto-2);cursor:pointer;white-space:nowrap;display:inline-flex;gap:6px;align-items:center}
+.aba:hover{border-color:var(--azul);color:var(--azul)}
+.aba[aria-pressed="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.aba .cont{font-size:12px;opacity:.75}
+.ordem{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--texto-2)}
+.ordem select{border:1px solid var(--borda-forte);border-radius:8px;padding:6px 10px;background:var(--superficie);font-size:13px}
+
+.admin-barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--superficie);border:1px dashed var(--azul);border-radius:var(--raio);padding:12px 14px;margin:0 0 24px}
+.admin-barra .rotulo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--azul);margin-right:auto}
+
+.categoria{margin-top:28px}
+.categoria-cab{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--borda)}
+.categoria-cab h2{font-size:19px;font-weight:700;margin:0;position:relative;padding-left:14px}
+.categoria-cab h2::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:4px;border-radius:4px;background:var(--amarelo)}
+.categoria-cab p{margin:0;color:var(--texto-3);font-size:13.5px}
+
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.cartao{position:relative;background:var(--superficie);border:1px solid var(--borda);border-radius:var(--raio);padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--sombra);transition:box-shadow .18s,border-color .18s,transform .18s;min-width:0}
+.cartao:hover{box-shadow:var(--sombra-hover);border-color:#b9cbe4;transform:translateY(-2px)}
+.cartao-topo{display:flex;gap:14px;align-items:flex-start;min-width:0}
+.ladrilho{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none}
+.ladrilho .icone{width:23px;height:23px}
+.cartao h3{margin:0;font-size:16px;font-weight:700;line-height:1.3;word-break:break-word}
+.cartao h3 a{color:var(--texto);text-decoration:none}
+.cartao h3 a::after{content:"";position:absolute;inset:0;border-radius:var(--raio)}
+.cartao h3 a:focus-visible{outline:none}
+.cartao:focus-within{outline:3px solid var(--amarelo);outline-offset:2px}
+.dominio{display:block;font-size:12.5px;color:var(--texto-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.titulo-bloco{min-width:0;flex:1;padding-right:4px}
+.cartao .desc{margin:0;color:var(--texto-2);font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:0}
+.selos{display:flex;flex-wrap:wrap;gap:6px}
+.selo{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:6px;padding:3px 8px}
+.selo .icone{width:13px;height:13px}
+.selo-rede{background:var(--alerta-bg);color:var(--alerta-tx)}
+.cartao-rodape{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px solid var(--borda);font-size:12.5px;color:var(--texto-3);min-width:0}
+.resp{display:flex;align-items:center;gap:6px;min-width:0}
+.resp span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resp a{position:relative;z-index:2;color:var(--azul);text-decoration:none;font-weight:600}
+.resp a:hover{text-decoration:underline}
+.acessos{display:flex;align-items:center;gap:5px;white-space:nowrap;flex:none}
+.cartao-admin{position:absolute;top:10px;right:10px;display:flex;gap:4px;z-index:3;opacity:0;transition:opacity .15s}
+.cartao:hover .cartao-admin,.cartao:focus-within .cartao-admin{opacity:1}
+.cartao-admin button{box-shadow:0 2px 6px rgba(16,24,40,.12);background:var(--superficie);border:1px solid var(--borda);border-radius:8px;width:32px;height:32px;display:grid;place-items:center;cursor:pointer;color:var(--texto-2)}
+.cartao-admin button:hover{color:var(--azul);border-color:var(--azul)}
+.cartao-admin button.excluir:hover{color:var(--perigo);border-color:var(--perigo)}
+@media (hover:none){.cartao-admin{opacity:1}.modo-admin .titulo-bloco{padding-right:64px}}
+
+/* ---------- Pastas ---------- */
+.grade{isolation:isolate}
+.cartao-pasta{background:linear-gradient(180deg,#f7faff 0,#fff 56px)}
+.cartao-pasta::before{content:"";position:absolute;inset:7px -6px -6px 7px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superficie);z-index:-1;box-shadow:var(--sombra)}
+.cartao-pasta h3 button{all:unset;cursor:pointer;color:var(--texto)}
+.cartao-pasta h3 button::after{content:"";position:absolute;inset:0;border-radius:var(--raio)}
+.tipo-pasta{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--azul)}
+.tipo-pasta .icone{width:13px;height:13px}
+.amostra{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.amostra span{font-size:12px;font-weight:600;color:var(--texto-2);background:var(--fundo);border:1px solid var(--borda);border-radius:6px;padding:2px 8px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.abrir-txt{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--azul);white-space:nowrap}
+.cartao-pasta:hover .abrir-txt .icone{transform:translateX(3px)}
+.abrir-txt .icone{transition:transform .15s}
+.selo-pasta{position:relative;z-index:2;background:var(--azul-claro);color:var(--azul);border:0;cursor:pointer;font-family:inherit}
+.selo-pasta:hover{background:#d6e4f6}
+
+.pasta-cab{background:var(--superficie);border:1px solid var(--borda);border-radius:var(--raio);padding:16px 18px;margin-bottom:24px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--sombra)}
+.pasta-nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.trilha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px;color:var(--texto-3);min-width:0}
+.trilha a{color:var(--azul);font-weight:600;text-decoration:none}
+.trilha a:hover{text-decoration:underline}
+.trilha .icone{width:14px;height:14px}
+.trilha strong{color:var(--texto);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pasta-info{display:flex;gap:14px;align-items:center;min-width:0}
+.pasta-info h2{margin:0;font-size:22px;font-weight:800;line-height:1.2;word-break:break-word}
+.pasta-info p{margin:2px 0 0;color:var(--texto-2);font-size:14px}
+.pasta-info .ladrilho{width:54px;height:54px;border-radius:14px}
+.pasta-info .ladrilho .icone{width:27px;height:27px}
+body.em-pasta .hero p.lead{display:none}
+body.em-pasta .hero .wrap{padding-top:28px;padding-bottom:30px}
+body.em-pasta .barra,body.em-pasta #populares{display:none!important}
+.trilha a{display:inline-flex;align-items:center;gap:4px}
+.segmentado{align-self:flex-start;display:inline-flex;border:1px solid var(--borda-forte);border-radius:10px;padding:3px;background:var(--fundo);gap:3px}
+.segmentado label{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;font-weight:600;font-size:14px;cursor:pointer;color:var(--texto-2)}
+.segmentado input{position:absolute;opacity:0;pointer-events:none}
+.segmentado input:checked+label{background:var(--superficie);color:var(--azul);box-shadow:var(--sombra)}
+.segmentado input:focus-visible+label{outline:3px solid var(--amarelo)}
+.segmentado input:disabled+label{cursor:not-allowed;opacity:.6}
+
+.vazio{text-align:center;padding:56px 16px;color:var(--texto-3)}
+.vazio .icone{width:40px;height:40px;color:var(--borda-forte);margin-bottom:8px}
+.vazio strong{display:block;color:var(--texto);font-size:16px;margin-bottom:4px}
+.carregando{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:28px}
+.carregando div{height:150px;border-radius:var(--raio);background:linear-gradient(90deg,#e9edf3,#f5f7fa,#e9edf3);background-size:200% 100%;animation:brilho 1.2s infinite}
+@keyframes brilho{to{background-position:-200% 0}}
+
+/* ---------- Rodapé ---------- */
+footer{background:var(--azul-escuro);color:rgba(255,255,255,.85);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:24px;padding-bottom:24px}
+footer img{height:54px;width:auto;display:block}
+footer p{margin:0;max-width:520px}
+
+/* ---------- Janelas (dialog) ---------- */
+dialog{border:0;border-radius:16px;padding:0;width:min(640px,calc(100vw - 32px));max-height:calc(100vh - 32px);box-shadow:0 24px 60px rgba(0,0,0,.25);color:var(--texto)}
+dialog::backdrop{background:rgba(15,23,42,.55)}
+dialog.pequeno{width:min(440px,calc(100vw - 32px))}
+dialog.largo{width:min(860px,calc(100vw - 32px))}
+.dlg{display:flex;flex-direction:column;max-height:calc(100vh - 32px)}
+.dlg-cab{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid var(--borda)}
+.dlg-cab h2{margin:0;font-size:18px;font-weight:700}
+.dlg-corpo{padding:20px 22px;overflow:auto}
+.dlg-rodape{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid var(--borda);background:var(--fundo);border-radius:0 0 16px 16px;flex-wrap:wrap}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.campo{display:flex;flex-direction:column;gap:6px;min-width:0}
+.campo.cheio{grid-column:1/-1}
+.campo label,.campo .rot{font-size:13px;font-weight:600;color:var(--texto-2)}
+.campo label .obr{color:var(--perigo)}
+.campo input,.campo select,.campo textarea{border:1px solid var(--borda-forte);border-radius:8px;padding:10px 12px;background:#fff;font-size:14.5px;width:100%}
+.campo textarea{resize:vertical;min-height:72px}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(3,78,162,.15)}
+.campo .ajuda{font-size:12px;color:var(--texto-3)}
+.campo .erro{font-size:12.5px;color:var(--perigo);font-weight:600}
+.campo.invalido input,.campo.invalido select{border-color:var(--perigo)}
+.icones-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;max-height:148px;overflow:auto;padding:2px}
+.icones-grade button{height:40px;border:1px solid var(--borda);border-radius:8px;background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--texto-2)}
+.icones-grade button:hover{border-color:var(--azul);color:var(--azul)}
+.icones-grade button[aria-pressed="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.cores{display:flex;flex-wrap:wrap;gap:8px}
+.cores button{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--borda-forte);cursor:pointer}
+.cores button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--preto)}
+.alternador{display:flex;gap:12px;align-items:flex-start;background:var(--fundo);border:1px solid var(--borda);border-radius:10px;padding:12px}
+.alternador input{width:18px;height:18px;margin-top:2px;accent-color:var(--azul);flex:none}
+.alternador label{font-weight:600;font-size:14px;color:var(--texto)}
+.alternador small{display:block;font-weight:500;color:var(--texto-3);font-size:12.5px}
+.previa{display:flex;align-items:center;gap:12px;background:var(--fundo);border-radius:10px;padding:10px 12px}
+.previa strong{font-size:15px}
+.msg-erro{background:var(--perigo-bg);color:var(--perigo);border-radius:8px;padding:10px 12px;font-size:13.5px;font-weight:600;margin-bottom:12px}
+
+.lista-simples{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.lista-simples li{display:flex;align-items:center;gap:12px;border:1px solid var(--borda);border-radius:10px;padding:10px 12px;background:#fff;min-width:0}
+.lista-simples .info{flex:1;min-width:0}
+.lista-simples .info strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lista-simples .info small{color:var(--texto-3);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-form{display:grid;grid-template-columns:1fr 1.4fr 80px auto;gap:8px;align-items:end;margin-bottom:16px;padding:12px;border:1px dashed var(--borda-forte);border-radius:10px}
+.cat-form input{border:1px solid var(--borda-forte);border-radius:8px;padding:9px 10px;width:100%;font-size:14px}
+
+.tabela-wrap{overflow-x:auto;border:1px solid var(--borda);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--borda);vertical-align:top}
+th{background:var(--fundo);font-weight:700;color:var(--texto-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.tag-acao{display:inline-block;font-size:11px;font-weight:700;border-radius:5px;padding:2px 7px;white-space:nowrap}
+.tag-INCLUSAO{background:var(--sucesso-bg);color:var(--verde)}
+.tag-ALTERACAO{background:var(--azul-claro);color:var(--azul)}
+.tag-EXCLUSAO,.tag-EXCLUSAO_DEFINITIVA{background:var(--perigo-bg);color:var(--perigo)}
+.tag-RESTAURACAO{background:var(--alerta-bg);color:var(--alerta-tx)}
+.mudancas{color:var(--texto-3);font-size:12px}
+
+/* ---------- Aviso flutuante ---------- */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--preto);color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50;display:flex;gap:10px;align-items:center;max-width:calc(100vw - 32px)}
+.toast.ver{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .icone{color:var(--amarelo)}
+
+/* ---------- Telas pequenas ---------- */
+@media (max-width:720px){
+  .wrap{padding:0 16px}
+  .topo .wrap{min-height:64px}
+  .marca img{height:46px}
+  .populares-lista{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+  .populares-lista::-webkit-scrollbar{display:none}
+  .pilula{flex:none}
+  .busca input{font-size:15px}
+  .btn-entrar .txt{display:none}
+  .btn-entrar{padding:9px}
+  .usuario{display:none}
+  .hero .wrap{padding-top:28px;padding-bottom:30px}
+  .hero p.lead{font-size:14.5px}
+  .busca kbd{display:none}
+  .busca input{padding-right:16px}
+  .campos{grid-template-columns:1fr}
+  .cat-form{grid-template-columns:1fr}
+  .admin-barra .rotulo{width:100%}
+  .admin-barra .btn .txt-longo{display:none}
+  footer .wrap{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="./" aria-label="Página inicial">
+      <img src="assets/assinatura-seduc.png" alt="Secretaria da Educação (SEDUC), Governo do Piauí">
+    </a>
+    <div class="topo-acoes">
+      <div class="usuario oculto" id="usuarioInfo"><svg class="icone" data-i="user"></svg><span id="usuarioNome"></span></div>
+      <button class="btn btn-sec btn-entrar" id="btnEntrar" type="button" title="Área do administrador"><svg class="icone" data-i="log-in"></svg><span class="txt">Área do administrador</span></button>
+      <button class="btn btn-sec btn-entrar oculto" id="btnSair" type="button" title="Sair"><svg class="icone" data-i="log-out"></svg><span class="txt">Sair</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="sobretitulo">Gerência de Material e Patrimônio</p>
+    <h1>Portal de Links da GMAP</h1>
+    <p class="lead">Todos os sistemas, painéis e ferramentas do setor em um só lugar. Encontre, clique e acesse.</p>
+    <div class="busca" role="search">
+      <svg class="icone" data-i="search"></svg>
+      <label for="busca" class="sr">Buscar sistema</label>
+      <input id="busca" type="search" placeholder="Buscar sistema ou responsável" autocomplete="off">
+      <kbd>/</kbd>
+    </div>
+  </div>
+  <div class="faixa-cores" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+</section>
+
+<main>
+  <div class="wrap">
+    <div class="aviso-demo oculto" id="avisoDemo">
+      <svg class="icone" data-i="info"></svg>
+      <div><strong>Modo demonstração.</strong> Os dados ficam só neste navegador. Para testar a área do administrador, use qualquer e-mail e a senha <strong>demo</strong>. Para usar com a equipe, configure o Supabase no arquivo config.js.</div>
+    </div>
+
+    <div class="admin-barra oculto" id="adminBarra">
+      <span class="rotulo"><svg class="icone" data-i="shield-check"></svg>Modo administrador</span>
+      <button class="btn btn-primario" id="btnNovo" type="button"><svg class="icone" data-i="plus"></svg><span id="btnNovoTxt">Novo link</span></button>
+      <button class="btn btn-sec" id="btnNovaPasta" type="button"><svg class="icone" data-i="folder-plus"></svg>Nova pasta</button>
+      <button class="btn btn-sec" id="btnCategorias" type="button"><svg class="icone" data-i="tags"></svg>Categorias</button>
+      <button class="btn btn-sec" id="btnLixeira" type="button"><svg class="icone" data-i="trash-2"></svg><span>Lixeira<span id="lixeiraCont"></span></span></button>
+      <button class="btn btn-sec" id="btnHistorico" type="button"><svg class="icone" data-i="history"></svg><span>Histórico<span class="txt-longo"> de alterações</span></span></button>
+    </div>
+
+    <section class="populares oculto" id="populares" aria-labelledby="popTitulo">
+      <h2 class="bloco-titulo" id="popTitulo"><svg class="icone" data-i="trending-up"></svg>Mais acessados</h2>
+      <div class="populares-lista" id="popularesLista"></div>
+    </section>
+
+    <div class="barra">
+      <div class="abas" id="abas" role="toolbar" aria-label="Filtrar por categoria"></div>
+      <label class="ordem">Ordenar
+        <select id="ordem">
+          <option value="nome">Nome (A a Z)</option>
+          <option value="acessos">Mais acessados</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="conteudo">
+      <div class="carregando"><div></div><div></div><div></div></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/assinatura-seduc-branca.png" alt="Secretaria da Educação (SEDUC), Governo do Piauí">
+    <p>Gerência de Material e Patrimônio (GMAP) · Secretaria de Estado da Educação do Piauí. Para incluir ou corrigir um link, fale com um administrador do Portal de Links.</p>
+  </div>
+</footer>
+
+<!-- ===== Janela: login ===== -->
+<dialog id="dlgLogin" class="pequeno">
+  <form class="dlg" id="formLogin" novalidate>
+    <div class="dlg-cab"><h2>Área do administrador</h2><button class="btn btn-fantasma btn-icone" type="button" data-fechar aria-label="Fechar"><svg class="icone" data-i="x"></svg></button></div>
+    <div class="dlg-corpo">
+      <div class="msg-erro oculto" id="loginErro"></div>
+      <div class="campos">
+        <div class="campo cheio"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="username" required></div>
+        <div class="campo cheio"><label for="loginSenha">Senha</label><input id="loginSenha" type="password" autocomplete="current-password" required></div>
+      </div>
+      <p class="campo"><span class="ajuda">Só administradores cadastrados podem alterar os links. A equipe acessa o Portal de Links sem login.</span></p>
+    </div>
+    <div class="dlg-rodape"><button class="btn btn-sec" type="button" data-fechar>Cancelar</button><button class="btn btn-primario" type="submit" id="btnLoginEnviar"><svg class="icone" data-i="log-in"></svg>Entrar</button></div>
+  </form>
+</dialog>
+
+<!-- ===== Janela: sistema ===== -->
+<dialog id="dlgSistema">
+  <form class="dlg" id="formSistema" novalidate>
+    <div class="dlg-cab"><h2 id="sisTitulo">Novo link</h2><button class="btn btn-fantasma btn-icone" type="button" data-fechar aria-label="Fechar"><svg class="icone" data-i="x"></svg></button></div>
+    <div class="dlg-corpo">
+      <div class="msg-erro oculto" id="sisErro"></div>
+      <div class="campos">
+        <div class="campo cheio"><span class="rot">Tipo</span>
+          <div class="segmentado" role="radiogroup" aria-label="Tipo de item">
+            <input type="radio" name="fTipo" id="fTipoLink" value="link" checked><label for="fTipoLink"><svg class="icone" data-i="link"></svg>Link</label>
+            <input type="radio" name="fTipo" id="fTipoPasta" value="pasta"><label for="fTipoPasta"><svg class="icone" data-i="folder"></svg>Pasta</label>
+          </div>
+          <span class="ajuda" id="tipoAjuda">Um link abre um sistema. Uma pasta agrupa vários links (ex.: Auditorias) e deixa a página inicial mais limpa.</span>
+        </div>
+        <div class="campo"><label for="fNome">Nome <span class="obr">*</span></label><input id="fNome" maxlength="80" required placeholder="Ex.: SEI"><span class="erro oculto"></span></div>
+        <div class="campo so-link"><label for="fPasta">Guardar na pasta</label><select id="fPasta"></select></div>
+        <div class="campo" id="campoCategoria"><label for="fCategoria">Categoria <span class="obr">*</span></label><select id="fCategoria" required></select><span class="erro oculto"></span></div>
+        <div class="campo cheio so-link"><label for="fUrl">Endereço (URL) <span class="obr">*</span></label><input id="fUrl" type="url" inputmode="url" required placeholder="https://"><span class="erro oculto"></span><span class="ajuda" id="urlAjuda"></span></div>
+        <div class="campo cheio"><label for="fDesc">Descrição curta</label><textarea id="fDesc" maxlength="240" rows="2" placeholder="Para que serve e quem usa"></textarea><span class="ajuda"><span id="descCont">0</span>/240 caracteres</span></div>
+        <div class="campo cheio so-link">
+          <div class="alternador"><input type="checkbox" id="fRede"><label for="fRede">Só abre na rede do Estado<small>Mostra um aviso no cartão. Use para sistemas como o Redmine, que não abrem fora da rede estadual.</small></label></div>
+        </div>
+        <div class="campo so-link"><label for="fRespNome">Responsável / suporte</label><input id="fRespNome" maxlength="80" placeholder="Pessoa ou setor"></div>
+        <div class="campo so-link"><label for="fRespContato">Contato</label><input id="fRespContato" maxlength="120" placeholder="E-mail, ramal ou telefone"></div>
+        <div class="campo cheio"><span class="rot">Ícone</span><div class="icones-grade" id="gradeIcones" role="group" aria-label="Escolha um ícone"></div></div>
+        <div class="campo cheio"><span class="rot">Cor</span><div class="cores" id="gradeCores" role="group" aria-label="Escolha uma cor"></div></div>
+        <div class="campo cheio"><span class="rot">Prévia</span><div class="previa" id="previa"></div></div>
+      </div>
+    </div>
+    <div class="dlg-rodape"><button class="btn btn-sec" type="button" data-fechar>Cancelar</button><button class="btn btn-primario" type="submit" id="btnSalvarSis"><svg class="icone" data-i="check"></svg>Salvar</button></div>
+  </form>
+</dialog>
+
+<!-- ===== Janela: confirmação ===== -->
+<dialog id="dlgConfirma" class="pequeno">
+  <div class="dlg">
+    <div class="dlg-cab"><h2 id="confTitulo">Confirmar</h2></div>
+    <div class="dlg-corpo"><p id="confTexto" style="margin:0"></p></div>
+    <div class="dlg-rodape"><button class="btn btn-sec" type="button" id="confNao">Cancelar</button><button class="btn btn-perigo" type="button" id="confSim">Confirmar</button></div>
+  </div>
+</dialog>
+
+<!-- ===== Janela: categorias ===== -->
+<dialog id="dlgCategorias">
+  <div class="dlg">
+    <div class="dlg-cab"><h2>Categorias</h2><button class="btn btn-fantasma btn-icone" type="button" data-fechar aria-label="Fechar"><svg class="icone" data-i="x"></svg></button></div>
+    <div class="dlg-corpo">
+      <div class="msg-erro oculto" id="catErro"></div>
+      <form class="cat-form" id="formCat" novalidate>
+        <input type="hidden" id="catId">
+        <div class="campo"><label for="catNome">Nome</label><input id="catNome" maxlength="60" required></div>
+        <div class="campo"><label for="catDesc">Descrição</label><input id="catDesc" maxlength="140"></div>
+        <div class="campo"><label for="catOrdem">Ordem</label><input id="catOrdem" type="number" min="0" step="1" value="100"></div>
+        <div style="display:flex;gap:6px"><button class="btn btn-sec oculto" type="button" id="catCancelar">Cancelar</button><button class="btn btn-primario" type="submit" id="catSalvar"><svg class="icone" data-i="plus"></svg><span>Adicionar</span></button></div>
+      </form>
+      <ul class="lista-simples" id="catLista"></ul>
+    </div>
+  </div>
+</dialog>
+
+<!-- ===== Janela: lixeira ===== -->
+<dialog id="dlgLixeira">
+  <div class="dlg">
+    <div class="dlg-cab"><h2>Lixeira</h2><button class="btn btn-fantasma btn-icone" type="button" data-fechar aria-label="Fechar"><svg class="icone" data-i="x"></svg></button></div>
+    <div class="dlg-corpo"><p class="campo" style="margin:0 0 12px"><span class="ajuda">Links e pastas excluídos ficam aqui e podem ser restaurados. Nada é apagado de vez pelo Portal de Links.</span></p><ul class="lista-simples" id="lixLista"></ul></div>
+  </div>
+</dialog>
+
+<!-- ===== Janela: histórico ===== -->
+<dialog id="dlgHistorico" class="largo">
+  <div class="dlg">
+    <div class="dlg-cab"><h2>Histórico de alterações</h2><button class="btn btn-fantasma btn-icone" type="button" data-fechar aria-label="Fechar"><svg class="icone" data-i="x"></svg></button></div>
+    <div class="dlg-corpo" id="histCorpo"></div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="icone" data-i="info"></svg><span id="toastTxt"></span></div>
+
+<script src="config.js"></script>
+<script src="assets/icones.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script>
+(() => {
+"use strict";
+
+/* ================= Utilidades ================= */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const norm = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+function svg(nome, cls = "icone") {
+  const nodes = (window.ICONES || {})[nome] || (window.ICONES || {})["globe"] || [];
+  const inner = nodes.map(([tag, attrs]) => "<" + tag + " " + Object.entries(attrs).map(([k, v]) => k + '="' + esc(v) + '"').join(" ") + "/>").join("");
+  return '<svg class="' + cls + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + "</svg>";
+}
+function pintarIcones(raiz = document) {
+  $$("svg[data-i]", raiz).forEach(el => { el.outerHTML = svg(el.dataset.i, el.getAttribute("class") || "icone"); });
+}
+
+function urlSegura(u) {
+  try { const x = new URL(u); return (x.protocol === "http:" || x.protocol === "https:") ? x.href : null; } catch { return null; }
+}
+function dominio(u) { try { return new URL(u).host.replace(/^www\./, ""); } catch { return u; } }
+
+function corTexto(hex) {
+  const n = parseInt(hex.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  const l = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  return l > 0.6 ? "#231f20" : "#ffffff";
+}
+function ladrilho(s, cls = "ladrilho") {
+  const cor = /^#[0-9a-f]{6}$/i.test(s.cor || "") ? s.cor : "#034ea2";
+  return '<span class="' + cls + '" style="background:' + cor + ";color:" + corTexto(cor) + '">' + svg(s.icone || "globe") + "</span>";
+}
+function linkContato(c) {
+  const t = String(c || "").trim();
+  if (!t) return "";
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)) return '<a href="mailto:' + esc(t) + '">' + esc(t) + "</a>";
+  const dig = t.replace(/\D/g, "");
+  if (dig.length >= 10) return '<a href="tel:+55' + esc(dig.replace(/^55/, "")) + '">' + esc(t) + "</a>";
+  return esc(t);
+}
+const fmtNum = (n) => Number(n || 0).toLocaleString("pt-BR");
+const fmtData = (d) => new Date(d).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
+let toastTimer;
+function toast(msg, icone = "info") {
+  const t = $("#toast");
+  t.querySelector("svg").outerHTML = svg(icone);
+  $("#toastTxt").textContent = msg;
+  t.classList.add("ver");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("ver"), 4200);
+}
+
+const ICONES_ESCOLHA = ["folder","globe","file-text","folder-open","package","boxes","warehouse","clipboard-list","clipboard-check","landmark","building-2","school","graduation-cap","truck","wrench","snowflake","monitor","laptop","server","database","chart-column","chart-pie","table","sheet","kanban","layout-dashboard","mail","phone","calendar","users","user-check","shield-check","key-round","receipt","wallet","scale","search","link","book-open","briefcase","archive","tag","qr-code","printer","map-pin","list","flame","star","layers"];
+const CORES = ["#034ea2","#007932","#ef4123","#fdb913","#231f20","#0b7285","#6741a3","#5b6472"];
+
+/* ================= Camada de dados ================= */
+const CFG = window.PORTAL_CONFIG || {};
+const DEMO = !(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY);
+
+const memoria = {};
+const armazenamento = {
+  ler(k) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return memoria[k] ?? null; } },
+  gravar(k, v) { memoria[k] = v; try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+function uuid() { return (crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(16).slice(2)); }
+
+const demo = (() => {
+  const CHAVE = "gmap-portal-links-demo-v3";
+  function semente() {
+    const c = [
+      { id: "c1", nome: "Sistemas corporativos", descricao: "Sistemas oficiais do Estado e da SEDUC usados no dia a dia", ordem: 10 },
+      { id: "c2", nome: "Ferramentas da GMAP", descricao: "Sistemas e painéis desenvolvidos para o setor", ordem: 20 },
+      { id: "c3", nome: "Planilhas e painéis", descricao: "Planilhas compartilhadas, relatórios e indicadores", ordem: 30 },
+      { id: "c4", nome: "Portais externos", descricao: "Portais de outros órgãos, fornecedores e consultas públicas", ordem: 40 }
+    ];
+    const agora = new Date().toISOString();
+    const s = (o) => Object.assign({ id: uuid(), tipo: "link", pasta_id: null, descricao: "", icone: "globe", cor: "#034ea2", somente_rede_estado: false, responsavel_nome: "", responsavel_contato: "", acessos: 0, excluido_em: null, criado_em: agora, atualizado_em: agora, criado_por: "demo", atualizado_por: "demo" }, o);
+    return {
+      categorias: c,
+      sistemas: [
+        s({ nome: "SEI", url: "https://sei.pi.gov.br/", categoria_id: "c1", descricao: "Processos administrativos eletrônicos do Estado.", icone: "file-text", cor: "#034ea2", acessos: 142, responsavel_nome: "Suporte SEI", responsavel_contato: "suporte.sei@exemplo.pi.gov.br" }),
+        s({ nome: "Redmine SEDUC", url: "http://redmine.exemplo.seduc.pi.gov.br/", categoria_id: "c1", descricao: "Solicitações de materiais e patrimônio das escolas e GREs.", icone: "clipboard-list", cor: "#ef4123", somente_rede_estado: true, acessos: 98, responsavel_nome: "TI SEDUC", responsavel_contato: "Ramal 0000" }),
+        s({ nome: "Alpa Patrimônio", url: "https://alpa.exemplo.pi.gov.br/", categoria_id: "c1", descricao: "Sistema patrimonial oficial do Estado.", icone: "landmark", cor: "#007932", acessos: 61 }),
+        s({ nome: "Agenda de entregas às escolas", url: "https://exemplo.sharepoint.com/agenda-entregas", categoria_id: "c2", descricao: "Programação semanal de entregas de materiais e bens.", icone: "truck", cor: "#fdb913", acessos: 77, responsavel_nome: "Almoxarifado" }),
+        s({ nome: "Painel de O.S. de Climatização", url: "https://script.google.com/exemplo", categoria_id: "c2", descricao: "Acompanhamento das ordens de serviço das empresas de climatização.", icone: "snowflake", cor: "#0b7285", acessos: 35 }),
+        s({ id: "p-aud", tipo: "pasta", nome: "Auditorias", url: null, categoria_id: "c3", descricao: "Planilhas anuais de entradas e saídas de bens enviados às escolas.", icone: "folder", cor: "#007932" }),
+        ...[2022, 2023, 2024, 2025, 2026].map((ano, i) => s({ nome: "Auditoria " + ano, url: "https://exemplo.sharepoint.com/auditoria-" + ano, pasta_id: "p-aud", categoria_id: null, descricao: "Entradas e saídas de bens de " + ano + ".", icone: "sheet", cor: "#007932", acessos: [3, 5, 8, 14, 23][i], responsavel_nome: "Núcleo de Patrimônio" })),
+        s({ id: "p-cont", tipo: "pasta", nome: "Contratos de climatização", url: null, categoria_id: "c3", descricao: "Planilhas de fiscalização por empresa contratada.", icone: "snowflake", cor: "#0b7285" }),
+        ...["Empresa A", "Empresa B", "Empresa C"].map(e => s({ nome: "Fiscalização " + e, url: "https://exemplo.sharepoint.com/fiscalizacao-" + e.slice(-1).toLowerCase(), pasta_id: "p-cont", categoria_id: null, icone: "clipboard-check", cor: "#0b7285", acessos: 2 })),
+        s({ nome: "Painel de indicadores", url: "https://exemplo.github.io/indicadores-gmap/", categoria_id: "c3", descricao: "Indicadores mensais de atendimento das solicitações.", icone: "chart-column", cor: "#034ea2", acessos: 12 }),
+        s({ nome: "Portal da Transparência PI", url: "https://transparencia.pi.gov.br/", categoria_id: "c4", descricao: "Consulta pública de despesas, contratos e empenhos.", icone: "search", cor: "#5b6472", acessos: 9 }),
+        s({ nome: "Diário Oficial do Estado", url: "https://www.diario.pi.gov.br/", categoria_id: "c4", descricao: "Publicações oficiais do Governo do Piauí.", icone: "book-open", cor: "#231f20", acessos: 4 })
+      ],
+      auditoria: [],
+      sessao: null
+    };
+  }
+  let db = armazenamento.ler(CHAVE) || semente();
+  const salvar = () => armazenamento.gravar(CHAVE, db);
+  const log = (tabela, registro_id, acao, antes, depois) => {
+    db.auditoria.unshift({ id: Date.now() + Math.random(), em: new Date().toISOString(), tabela, registro_id, acao, usuario_email: db.sessao?.email || "demo", antes, depois });
+    db.auditoria = db.auditoria.slice(0, 300);
+  };
+  const espera = () => new Promise(r => setTimeout(r, 120));
+  return {
+    async sessao() { return db.sessao; },
+    async entrar(email, senha) {
+      await espera();
+      if (senha !== "demo") throw new Error("No modo demonstração a senha é demo.");
+      db.sessao = { email, nome: email.split("@")[0], admin: true }; salvar(); return db.sessao;
+    },
+    async sair() { db.sessao = null; salvar(); },
+    async carregar(admin) {
+      await espera();
+      return { categorias: [...db.categorias], sistemas: db.sistemas.filter(s => admin || !s.excluido_em).map(s => ({ ...s })) };
+    },
+    async salvarSistema(dados) {
+      await espera();
+      const agora = new Date().toISOString(), email = db.sessao?.email || "demo";
+      if (dados.id) {
+        const i = db.sistemas.findIndex(s => s.id === dados.id), antes = { ...db.sistemas[i] };
+        db.sistemas[i] = { ...db.sistemas[i], ...dados, atualizado_em: agora, atualizado_por: email };
+        log("sistemas", dados.id, "ALTERACAO", antes, { ...db.sistemas[i] });
+      } else {
+        const novo = { ...dados, id: uuid(), acessos: 0, excluido_em: null, criado_em: agora, atualizado_em: agora, criado_por: email, atualizado_por: email };
+        db.sistemas.push(novo); log("sistemas", novo.id, "INCLUSAO", null, { ...novo });
+      }
+      salvar();
+    },
+    async excluirSistema(id, restaurar = false) {
+      await espera();
+      const s = db.sistemas.find(x => x.id === id), antes = { ...s };
+      s.excluido_em = restaurar ? null : new Date().toISOString();
+      log("sistemas", id, restaurar ? "RESTAURACAO" : "EXCLUSAO", antes, { ...s }); salvar();
+    },
+    async registrarAcesso(id) { const s = db.sistemas.find(x => x.id === id); if (s) { s.acessos++; salvar(); } },
+    async salvarCategoria(dados) {
+      await espera();
+      if (db.categorias.some(c => norm(c.nome) === norm(dados.nome) && c.id !== dados.id)) throw new Error("Já existe uma categoria com esse nome.");
+      if (dados.id) { const i = db.categorias.findIndex(c => c.id === dados.id), antes = { ...db.categorias[i] }; db.categorias[i] = { ...db.categorias[i], ...dados }; log("categorias", dados.id, "ALTERACAO", antes, { ...db.categorias[i] }); }
+      else { const n = { ...dados, id: uuid() }; db.categorias.push(n); log("categorias", n.id, "INCLUSAO", null, n); }
+      salvar();
+    },
+    async excluirCategoria(id) {
+      await espera();
+      const c = db.categorias.find(x => x.id === id);
+      db.categorias = db.categorias.filter(x => x.id !== id); log("categorias", id, "EXCLUSAO_DEFINITIVA", c, null); salvar();
+    },
+    async auditoria() { await espera(); return db.auditoria.slice(0, 200); }
+  };
+})();
+
+const nuvem = (() => {
+  if (DEMO) return null;
+  const sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
+  const falha = (error) => { if (error) { console.error(error); throw new Error(traduz(error.message)); } };
+  function traduz(m = "") {
+    if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
+    if (/Email not confirmed/i.test(m)) return "E-mail ainda não confirmado no Supabase.";
+    if (/row-level security|permission denied/i.test(m)) return "Seu usuário não tem permissão para esta ação.";
+    if (/duplicate key.*categorias_nome/i.test(m)) return "Já existe uma categoria com esse nome.";
+    if (/Failed to fetch|NetworkError/i.test(m)) return "Sem conexão com o servidor. Verifique a internet e tente de novo.";
+    return m || "Erro inesperado.";
+  }
+  async function perfil(user) {
+    if (!user) return null;
+    const { data, error } = await sb.from("administradores").select("nome,ativo").eq("user_id", user.id).maybeSingle();
+    if (error) console.error(error);
+    if (!data || !data.ativo) return { email: user.email, nome: user.email, admin: false };
+    return { email: user.email, nome: data.nome || user.email, admin: true };
+  }
+  return {
+    async sessao() { const { data } = await sb.auth.getSession(); return perfil(data.session?.user); },
+    async entrar(email, senha) {
+      const { data, error } = await sb.auth.signInWithPassword({ email, password: senha }); falha(error);
+      const p = await perfil(data.user);
+      if (!p.admin) { await sb.auth.signOut(); throw new Error("Este usuário não está cadastrado como administrador do Portal de Links."); }
+      return p;
+    },
+    async sair() { await sb.auth.signOut(); },
+    async carregar() {
+      const [c, s] = await Promise.all([
+        sb.from("categorias").select("*").order("ordem").order("nome"),
+        sb.from("sistemas").select("*").order("nome")
+      ]);
+      falha(c.error); falha(s.error);
+      return { categorias: c.data, sistemas: s.data };
+    },
+    async salvarSistema(d) {
+      const campos = { tipo: d.tipo, pasta_id: d.pasta_id, nome: d.nome, url: d.url, descricao: d.descricao, categoria_id: d.categoria_id, icone: d.icone, cor: d.cor, somente_rede_estado: d.somente_rede_estado, responsavel_nome: d.responsavel_nome, responsavel_contato: d.responsavel_contato };
+      const r = d.id ? await sb.from("sistemas").update(campos).eq("id", d.id).select("id") : await sb.from("sistemas").insert(campos).select("id");
+      falha(r.error); if (!r.data?.length) throw new Error("Seu usuário não tem permissão para esta ação.");
+    },
+    async excluirSistema(id, restaurar = false) {
+      const r = await sb.from("sistemas").update({ excluido_em: restaurar ? null : new Date().toISOString() }).eq("id", id).select("id");
+      falha(r.error); if (!r.data?.length) throw new Error("Seu usuário não tem permissão para esta ação.");
+    },
+    async registrarAcesso(id) { const { error } = await sb.rpc("portal_registrar_acesso", { p_id: id }); if (error) console.warn(error); },
+    async salvarCategoria(d) {
+      const campos = { nome: d.nome, descricao: d.descricao, ordem: d.ordem };
+      const r = d.id ? await sb.from("categorias").update(campos).eq("id", d.id).select("id") : await sb.from("categorias").insert(campos).select("id");
+      falha(r.error);
+    },
+    async excluirCategoria(id) { const r = await sb.from("categorias").delete().eq("id", id); falha(r.error); },
+    async auditoria() {
+      const { data, error } = await sb.from("auditoria").select("*").order("em", { ascending: false }).limit(200); falha(error); return data;
+    }
+  };
+})();
+
+const api = DEMO ? demo : nuvem;
+
+/* ================= Estado e renderização ================= */
+const est = { categorias: [], sistemas: [], usuario: null, filtro: "todas", busca: "", ordem: "nome", pasta: null };
+try { const o = localStorage.getItem("gmap-portal-ordem"); if (o) est.ordem = o; } catch {}
+$("#ordem").value = est.ordem;
+
+const ehAdmin = () => !!est.usuario?.admin;
+const pastaDe = (s) => s.pasta_id ? est.sistemas.find(p => p.id === s.pasta_id) : null;
+// Visível: não excluído e, se estiver em pasta, a pasta existe e não está na lixeira
+const visivel = (s) => !s.excluido_em && (!s.pasta_id || (pastaDe(s) && !pastaDe(s).excluido_em));
+const ativos = () => est.sistemas.filter(visivel);
+const catDe = (s) => s.pasta_id ? pastaDe(s)?.categoria_id : s.categoria_id;
+const filhosDe = (id) => ativos().filter(s => s.pasta_id === id);
+const ehPasta = (s) => s.tipo === "pasta";
+const acessosDe = (s) => ehPasta(s) ? filhosDe(s.id).reduce((t, f) => t + (f.acessos || 0), 0) : (s.acessos || 0);
+const plural = (n, um, varios) => n + " " + (n === 1 ? um : varios);
+
+function ordenar(lista) {
+  const porNome = (a, b) => a.nome.localeCompare(b.nome, "pt-BR");
+  const crit = est.ordem === "acessos" ? (a, b) => (acessosDe(b) - acessosDe(a)) || porNome(a, b) : porNome;
+  return [...lista].sort((a, b) => (ehPasta(b) - ehPasta(a)) || crit(a, b)); // pastas primeiro
+}
+function casaBusca(s) {
+  if (!est.busca) return true;
+  const alvo = norm([s.nome, s.descricao, s.responsavel_nome, s.responsavel_contato, s.url ? dominio(s.url) : ""].join(" "));
+  return norm(est.busca).split(/\s+/).every(t => alvo.includes(t));
+}
+
+function htmlAdmin(s) {
+  return ehAdmin() ? '<div class="cartao-admin"><button type="button" data-editar="' + esc(s.id) + '" title="Editar" aria-label="Editar ' + esc(s.nome) + '">' + svg("pencil") + '</button><button type="button" class="excluir" data-excluir="' + esc(s.id) + '" title="Excluir" aria-label="Excluir ' + esc(s.nome) + '">' + svg("trash-2") + "</button></div>" : "";
+}
+
+function htmlCartao(s, mostrarPasta) {
+  const href = urlSegura(s.url) || "#";
+  const pasta = mostrarPasta ? pastaDe(s) : null;
+  const resp = s.responsavel_nome || s.responsavel_contato
+    ? '<span class="resp" title="Responsável / suporte">' + svg("user") + "<span>" + esc(s.responsavel_nome || "") + (s.responsavel_nome && s.responsavel_contato ? " · " : "") + linkContato(s.responsavel_contato) + "</span></span>"
+    : '<span class="resp"><span>Sem responsável informado</span></span>';
+  const selos = [];
+  if (pasta) selos.push('<button type="button" class="selo selo-pasta" data-pasta="' + esc(pasta.id) + '" title="Abrir a pasta">' + svg("folder") + "Em " + esc(pasta.nome) + "</button>");
+  if (s.somente_rede_estado) selos.push('<span class="selo selo-rede" title="Este sistema só abre conectado à rede do Estado">' + svg("lock") + "Só na rede do Estado</span>");
+  return '<article class="cartao" data-id="' + esc(s.id) + '">' + htmlAdmin(s) +
+    '<div class="cartao-topo">' + ladrilho(s) +
+      '<div class="titulo-bloco"><h3><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" data-abrir="' + esc(s.id) + '">' + esc(s.nome) + '</a></h3><span class="dominio">' + esc(dominio(s.url)) + "</span></div>" +
+    "</div>" +
+    (s.descricao ? '<p class="desc">' + esc(s.descricao) + "</p>" : "") +
+    (selos.length ? '<div class="selos">' + selos.join("") + "</div>" : "") +
+    '<div class="cartao-rodape">' + resp + '<span class="acessos" title="Total de acessos pelo Portal de Links">' + svg("trending-up") + fmtNum(s.acessos) + "</span></div>" +
+  "</article>";
+}
+
+function htmlPasta(p) {
+  const filhos = ordenar(filhosDe(p.id));
+  const amostra = filhos.slice(0, 3).map(f => "<span>" + esc(f.nome) + "</span>").join("") + (filhos.length > 3 ? "<span>+" + (filhos.length - 3) + "</span>" : "");
+  return '<article class="cartao cartao-pasta" data-id="' + esc(p.id) + '">' + htmlAdmin(p) +
+    '<div class="cartao-topo">' + ladrilho(p) +
+      '<div class="titulo-bloco"><h3><button type="button" data-pasta="' + esc(p.id) + '" aria-label="Abrir pasta ' + esc(p.nome) + '">' + esc(p.nome) + '</button></h3><span class="tipo-pasta">' + svg("folder") + "Pasta · " + plural(filhos.length, "link", "links") + "</span></div>" +
+    "</div>" +
+    (p.descricao ? '<p class="desc">' + esc(p.descricao) + "</p>" : "") +
+    (amostra ? '<div class="amostra">' + amostra + "</div>" : "") +
+    '<div class="cartao-rodape"><span class="acessos" title="Acessos somados dos links da pasta">' + svg("trending-up") + fmtNum(acessosDe(p)) + '</span><span class="abrir-txt">Abrir pasta' + svg("chevron-right") + "</span></div>" +
+  "</article>";
+}
+const htmlItem = (s, mostrarPasta) => ehPasta(s) ? htmlPasta(s) : htmlCartao(s, mostrarPasta);
+
+function render() {
+  document.body.classList.toggle("modo-admin", ehAdmin());
+  $("#adminBarra").classList.toggle("oculto", !ehAdmin());
+  const nLix = est.sistemas.filter(s => s.excluido_em).length;
+  $("#lixeiraCont").textContent = nLix ? " (" + nLix + ")" : "";
+
+  const pasta = est.pasta ? est.sistemas.find(s => s.id === est.pasta && ehPasta(s) && visivel(s)) : null;
+  if (est.pasta && !pasta) { est.pasta = null; if (location.hash) history.replaceState(null, "", location.pathname + location.search); }
+  document.body.classList.toggle("em-pasta", !!pasta);
+  $("#busca").placeholder = pasta ? "Buscar nesta pasta" : "Buscar sistema ou responsável";
+  $("#btnNovoTxt").textContent = pasta ? "Novo link nesta pasta" : "Novo link";
+  $("#btnNovaPasta").classList.toggle("oculto", !!pasta);
+  if (pasta) renderPasta(pasta); else renderInicio();
+}
+
+function renderPasta(p) {
+  const cat = est.categorias.find(c => c.id === p.categoria_id);
+  const filhos = filhosDe(p.id), itens = ordenar(filhos.filter(casaBusca));
+  let corpo;
+  if (!filhos.length) corpo = '<div class="vazio">' + svg("folder-open") + "<strong>Esta pasta ainda não tem links</strong>" + (ehAdmin() ? "Use o botão Novo link nesta pasta." : "Peça a um administrador para incluir os links.") + "</div>";
+  else if (!itens.length) corpo = '<div class="vazio">' + svg("search") + "<strong>Nada encontrado nesta pasta para “" + esc(est.busca) + "”</strong>Tente outro termo ou volte ao início para buscar em tudo.</div>";
+  else corpo = '<div class="grade">' + itens.map(s => htmlCartao(s, false)).join("") + "</div>";
+  $("#conteudo").innerHTML =
+    '<section class="pasta-cab" aria-labelledby="pastaTitulo">' +
+      '<div class="pasta-nav"><button type="button" class="btn btn-sec" data-voltar>' + svg("arrow-left") + "Voltar ao início</button>" +
+        '<nav class="trilha" aria-label="Você está em"><a href="#" data-voltar>' + svg("house") + "Início</a>" + svg("chevron-right") + (cat ? "<span>" + esc(cat.nome) + "</span>" + svg("chevron-right") : "") + "<strong>" + esc(p.nome) + "</strong></nav></div>" +
+      '<div class="pasta-info">' + ladrilho(p) + '<div style="min-width:0"><h2 id="pastaTitulo">' + esc(p.nome) + "</h2><p>" + (p.descricao ? esc(p.descricao) + " · " : "") + plural(filhos.length, "link", "links") + "</p></div></div>" +
+    "</section>" + corpo;
+}
+
+function renderInicio() {
+  const lista = ativos(), topo = lista.filter(s => !s.pasta_id), links = lista.filter(s => !ehPasta(s));
+  const valida = (id) => est.categorias.some(c => c.id === id);
+
+  // abas: contam o que aparece na página inicial (links soltos + pastas)
+  const semCat = topo.filter(s => !valida(s.categoria_id));
+  const abas = [{ id: "todas", nome: "Todos", n: topo.length }, ...est.categorias.map(c => ({ id: c.id, nome: c.nome, n: topo.filter(s => s.categoria_id === c.id).length }))];
+  if (semCat.length) abas.push({ id: "sem", nome: "Sem categoria", n: semCat.length });
+  if (!abas.some(a => a.id === est.filtro)) est.filtro = "todas";
+  $("#abas").innerHTML = abas.map(a => '<button type="button" class="aba" data-aba="' + esc(a.id) + '" aria-pressed="' + (a.id === est.filtro) + '">' + esc(a.nome) + ' <span class="cont">' + a.n + "</span></button>").join("");
+
+  // mais acessados (inclui links de dentro das pastas)
+  const top = links.filter(s => s.acessos > 0).sort((a, b) => b.acessos - a.acessos).slice(0, 6);
+  $("#populares").classList.toggle("oculto", top.length < 3 || !!est.busca);
+  $("#popularesLista").innerHTML = top.map(s => '<a class="pilula" href="' + esc(urlSegura(s.url) || "#") + '" target="_blank" rel="noopener noreferrer" data-abrir="' + esc(s.id) + '">' + ladrilho(s, "mini") + '<span class="nome">' + esc(s.nome) + "</span><small>" + fmtNum(s.acessos) + "</small></a>").join("");
+
+  // com busca: procura também dentro das pastas; sem busca: só o primeiro nível
+  const base = est.busca ? lista.filter(casaBusca) : topo;
+  const catItem = (s) => valida(catDe(s)) ? catDe(s) : "sem";
+  let grupos = est.categorias.map(c => ({ cat: c, itens: base.filter(s => catItem(s) === c.id) }));
+  const soltos = base.filter(s => catItem(s) === "sem");
+  if (soltos.length) grupos.push({ cat: { id: "sem", nome: "Sem categoria", descricao: "Edite estes itens e escolha uma categoria" }, itens: soltos });
+  if (est.filtro !== "todas") grupos = grupos.filter(g => g.cat.id === est.filtro);
+  grupos = grupos.map(g => ({ ...g, itens: ordenar(g.itens) })).filter(g => g.itens.length || (ehAdmin() && !est.busca && est.filtro === g.cat.id));
+
+  const alvo = $("#conteudo");
+  if (!lista.length) {
+    alvo.innerHTML = '<div class="vazio">' + svg("layers") + "<strong>Nenhum link cadastrado ainda</strong>" + (ehAdmin() ? "Use os botões Novo link ou Nova pasta para começar." : "Peça a um administrador para cadastrar os links do setor.") + "</div>";
+    return;
+  }
+  if (!grupos.length) {
+    alvo.innerHTML = '<div class="vazio">' + svg("search") + "<strong>Nada encontrado" + (est.busca ? " para “" + esc(est.busca) + "”" : "") + "</strong>Tente outro termo ou veja todas as categorias.</div>";
+    return;
+  }
+  alvo.innerHTML = grupos.map(g =>
+    '<section class="categoria"><div class="categoria-cab"><h2>' + esc(g.cat.nome) + "</h2>" + (g.cat.descricao ? "<p>" + esc(g.cat.descricao) + "</p>" : "") + "</div>" +
+    (g.itens.length ? '<div class="grade">' + g.itens.map(s => htmlItem(s, !!est.busca)).join("") + "</div>" : '<p class="mudancas">Nenhum item nesta categoria.</p>') +
+    "</section>").join("");
+}
+
+/* ---------- Navegação entre início e pastas (pelo endereço #pasta-...) ---------- */
+let navInterna = false;
+function lerEndereco() { const m = location.hash.match(/^#pasta-([A-Za-z0-9-]+)$/); est.pasta = m ? m[1] : null; }
+function abrirPasta(id) {
+  est.busca = ""; $("#busca").value = "";
+  navInterna = true; location.hash = "pasta-" + id;
+}
+function voltarInicio() {
+  est.busca = ""; $("#busca").value = "";
+  if (navInterna && history.length > 1) history.back();
+  else { history.replaceState(null, "", location.pathname + location.search); est.pasta = null; render(); }
+}
+window.addEventListener("hashchange", () => {
+  lerEndereco(); if (!est.pasta) navInterna = false;
+  render(); window.scrollTo({ top: 0 });
+});
+
+async function recarregar() {
+  try {
+    const d = await api.carregar(ehAdmin());
+    est.categorias = d.categorias || []; est.sistemas = (d.sistemas || []).map(s => ({ ...s, tipo: s.tipo || "link", pasta_id: s.pasta_id || null }));
+  } catch (e) {
+    $("#conteudo").innerHTML = '<div class="vazio">' + svg("triangle-alert") + "<strong>Não foi possível carregar os links</strong>" + esc(e.message) + "</div>";
+    return;
+  }
+  render();
+}
+
+function atualizarTopo() {
+  const u = est.usuario;
+  $("#usuarioInfo").classList.toggle("oculto", !u);
+  $("#usuarioNome").textContent = u ? u.nome : "";
+  $("#btnEntrar").classList.toggle("oculto", !!u);
+  $("#btnSair").classList.toggle("oculto", !u);
+}
+
+/* ================= Eventos da página ================= */
+const ultimoClique = {};
+document.addEventListener("click", (ev) => {
+  const abrir = ev.target.closest("[data-abrir]");
+  if (abrir) {
+    const id = abrir.dataset.abrir, s = est.sistemas.find(x => x.id === id);
+    if (!s || !urlSegura(s.url)) { ev.preventDefault(); toast("Endereço inválido. Avise um administrador.", "triangle-alert"); return; }
+    if (s.somente_rede_estado) toast("Este sistema só abre conectado à rede do Estado.", "lock");
+    if (!ultimoClique[id] || Date.now() - ultimoClique[id] > 10000) {
+      ultimoClique[id] = Date.now(); s.acessos = (s.acessos || 0) + 1; api.registrarAcesso(id);
+      setTimeout(render, 300);
+    }
+    return;
+  }
+  const pa = ev.target.closest("[data-pasta]");
+  if (pa) { abrirPasta(pa.dataset.pasta); return; }
+  const vo = ev.target.closest("[data-voltar]");
+  if (vo) { ev.preventDefault(); voltarInicio(); return; }
+  const aba = ev.target.closest("[data-aba]");
+  if (aba) { est.filtro = aba.dataset.aba; render(); return; }
+  const ed = ev.target.closest("[data-editar]");
+  if (ed) { abrirFormSistema(est.sistemas.find(s => s.id === ed.dataset.editar)); return; }
+  const ex = ev.target.closest("[data-excluir]");
+  if (ex) { excluir(est.sistemas.find(s => s.id === ex.dataset.excluir)); return; }
+  const fechar = ev.target.closest("[data-fechar]");
+  if (fechar) { fechar.closest("dialog").close(); }
+});
+
+let buscaTimer;
+$("#busca").addEventListener("input", (e) => { clearTimeout(buscaTimer); buscaTimer = setTimeout(() => { est.busca = e.target.value.trim(); render(); }, 120); });
+$("#busca").addEventListener("keydown", (e) => { if (e.key === "Escape" && e.target.value) { e.stopPropagation(); e.target.value = ""; est.busca = ""; render(); } });
+$(".marca").addEventListener("click", (e) => { if (est.pasta) { e.preventDefault(); voltarInicio(); } });
+document.addEventListener("keydown", (e) => {
+  // Esc dentro de uma pasta volta ao início (quando não há janela aberta)
+  if (e.key === "Escape" && est.pasta && !document.querySelector("dialog[open]")) { e.preventDefault(); voltarInicio(); return; }
+  if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.querySelector("dialog[open]")) { e.preventDefault(); $("#busca").focus(); }
+});
+$("#ordem").addEventListener("change", (e) => { est.ordem = e.target.value; try { localStorage.setItem("gmap-portal-ordem", est.ordem); } catch {} render(); });
+
+/* ================= Login ================= */
+$("#btnEntrar").addEventListener("click", () => { $("#loginErro").classList.add("oculto"); $("#formLogin").reset(); $("#dlgLogin").showModal(); $("#loginEmail").focus(); });
+$("#formLogin").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = $("#loginEmail").value.trim(), senha = $("#loginSenha").value;
+  const erro = $("#loginErro");
+  if (!email || !senha) { erro.textContent = "Informe e-mail e senha."; erro.classList.remove("oculto"); return; }
+  const b = $("#btnLoginEnviar"); b.disabled = true;
+  try {
+    est.usuario = await api.entrar(email, senha);
+    $("#dlgLogin").close(); atualizarTopo(); await recarregar(); toast("Bem-vindo, " + est.usuario.nome + ".", "shield-check");
+  } catch (err) { erro.textContent = err.message; erro.classList.remove("oculto"); }
+  finally { b.disabled = false; }
+});
+$("#btnSair").addEventListener("click", async () => { await api.sair(); est.usuario = null; atualizarTopo(); await recarregar(); toast("Você saiu da área do administrador.", "log-out"); });
+
+/* ================= Cadastro / edição ================= */
+let editando = null, escolha = { icone: "globe", cor: CORES[0] };
+const tipoForm = () => $("#fTipoPasta").checked ? "pasta" : "link";
+
+function montarEscolhas() {
+  $("#gradeIcones").innerHTML = ICONES_ESCOLHA.map(n => '<button type="button" data-icone="' + n + '" aria-pressed="' + (n === escolha.icone) + '" title="' + n + '" aria-label="Ícone ' + n + '">' + svg(n) + "</button>").join("");
+  $("#gradeCores").innerHTML = CORES.map(c => '<button type="button" data-cor="' + c + '" aria-pressed="' + (c === escolha.cor) + '" style="background:' + c + '" aria-label="Cor ' + c + '"></button>').join("");
+  atualizarPrevia();
+}
+function atualizarPrevia() {
+  const pasta = tipoForm() === "pasta";
+  const nome = $("#fNome").value.trim() || (pasta ? "Nome da pasta" : "Nome do link");
+  $("#previa").innerHTML = ladrilho({ icone: escolha.icone, cor: escolha.cor }) + "<div><strong>" + esc(nome) + "</strong>" + (pasta ? '<br><span class="tipo-pasta">' + svg("folder") + "Pasta</span>" : "") + "</div>";
+}
+// Mostra só os campos que fazem sentido para o tipo e para a pasta escolhida
+function ajustarCampos() {
+  const pasta = tipoForm() === "pasta";
+  $$("#formSistema .so-link").forEach(el => el.classList.toggle("oculto", pasta));
+  $("#campoCategoria").classList.toggle("oculto", !pasta && !!$("#fPasta").value);
+  $("#fNome").placeholder = pasta ? "Ex.: Auditorias" : "Ex.: SEI";
+  $("#sisTitulo").textContent = editando ? (pasta ? "Editar pasta" : "Editar link") : (pasta ? "Nova pasta" : "Novo link");
+  atualizarPrevia();
+}
+$("#gradeIcones").addEventListener("click", (e) => { const b = e.target.closest("[data-icone]"); if (!b) return; escolha.icone = b.dataset.icone; $$("[data-icone]").forEach(x => x.setAttribute("aria-pressed", x === b)); atualizarPrevia(); });
+$("#gradeCores").addEventListener("click", (e) => { const b = e.target.closest("[data-cor]"); if (!b) return; escolha.cor = b.dataset.cor; $$("[data-cor]").forEach(x => x.setAttribute("aria-pressed", x === b)); atualizarPrevia(); });
+$("#fNome").addEventListener("input", atualizarPrevia);
+$("#fPasta").addEventListener("change", ajustarCampos);
+$$('input[name="fTipo"]').forEach(r => r.addEventListener("change", () => {
+  if (tipoForm() === "pasta" && escolha.icone === "globe") { escolha.icone = "folder"; montarEscolhas(); }
+  if (tipoForm() === "link" && escolha.icone === "folder") { escolha.icone = "globe"; montarEscolhas(); }
+  ajustarCampos();
+}));
+$("#fDesc").addEventListener("input", (e) => { $("#descCont").textContent = e.target.value.length; });
+$("#fUrl").addEventListener("blur", (e) => {
+  let v = e.target.value.trim();
+  if (v && !/^[a-z]+:\/\//i.test(v)) { v = "https://" + v; e.target.value = v; }
+  const dup = est.sistemas.find(s => s.url && urlSegura(v) && s.url.replace(/\/+$/, "") === v.replace(/\/+$/, "") && s.id !== editando?.id);
+  $("#urlAjuda").textContent = dup ? "Atenção: este endereço já está cadastrado em “" + dup.nome + "”" + (dup.excluido_em ? " (na lixeira)." : ".") : "";
+});
+
+function abrirFormSistema(s, tipoNovo = "link") {
+  if (!est.categorias.length) { toast("Cadastre ao menos uma categoria antes.", "triangle-alert"); abrirCategorias(); return; }
+  editando = s || null;
+  const tipo = s ? (s.tipo || "link") : tipoNovo;
+  $("#fTipoLink").checked = tipo === "link"; $("#fTipoPasta").checked = tipo === "pasta";
+  // Depois de criado, o tipo não muda (evita esconder links ou quebrar pastas)
+  $("#fTipoLink").disabled = $("#fTipoPasta").disabled = !!s;
+  $("#tipoAjuda").textContent = s ? "O tipo não pode ser alterado depois de criado." : "Um link abre um sistema. Uma pasta agrupa vários links (ex.: Auditorias) e deixa a página inicial mais limpa.";
+  $("#sisErro").classList.add("oculto");
+  $$("#formSistema .campo").forEach(c => c.classList.remove("invalido"));
+  $$("#formSistema .erro").forEach(c => c.classList.add("oculto"));
+  $("#fCategoria").innerHTML = '<option value="">Selecione</option>' + est.categorias.map(c => '<option value="' + esc(c.id) + '">' + esc(c.nome) + "</option>").join("");
+  const pastas = ordenar(est.sistemas.filter(p => ehPasta(p) && !p.excluido_em));
+  $("#fPasta").innerHTML = '<option value="">Nenhuma (aparece direto na página inicial)</option>' + pastas.map(p => '<option value="' + esc(p.id) + '">' + esc(p.nome) + "</option>").join("");
+  $("#fNome").value = s?.nome || "";
+  $("#fUrl").value = s?.url || "";
+  $("#fDesc").value = s?.descricao || "";
+  $("#descCont").textContent = $("#fDesc").value.length;
+  $("#fPasta").value = s ? (s.pasta_id || "") : (est.pasta || "");
+  $("#fCategoria").value = s?.categoria_id || (est.filtro !== "todas" && est.filtro !== "sem" ? est.filtro : "");
+  $("#fRede").checked = !!s?.somente_rede_estado;
+  $("#fRespNome").value = s?.responsavel_nome || "";
+  $("#fRespContato").value = s?.responsavel_contato || "";
+  $("#urlAjuda").textContent = "";
+  escolha = { icone: s?.icone || (tipo === "pasta" ? "folder" : "globe"), cor: s?.cor || CORES[0] };
+  montarEscolhas(); ajustarCampos();
+  $("#dlgSistema").showModal();
+  $("#fNome").focus();
+}
+
+function marcaErro(id, msg) {
+  const campo = $("#" + id).closest(".campo"), e = campo.querySelector(".erro");
+  campo.classList.toggle("invalido", !!msg);
+  if (e) { e.textContent = msg || ""; e.classList.toggle("oculto", !msg); }
+  return !msg;
+}
+
+$("#formSistema").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const tipo = tipoForm(), pasta = tipo === "pasta";
+  if (!pasta) $("#fUrl").dispatchEvent(new Event("blur"));
+  const nome = $("#fNome").value.trim(), url = $("#fUrl").value.trim();
+  const pastaId = pasta ? null : ($("#fPasta").value || null);
+  const cat = pastaId ? null : $("#fCategoria").value;
+  let ok = true;
+  ok = marcaErro("fNome", nome.length < 2 ? "Informe o nome (mínimo 2 caracteres)." : "") && ok;
+  ok = marcaErro("fUrl", !pasta && !urlSegura(url) ? "Informe um endereço válido começando com http:// ou https://." : "") && ok;
+  ok = marcaErro("fCategoria", !pastaId && !cat ? "Escolha a categoria." : "") && ok;
+  if (!ok) { $("#formSistema .invalido input, #formSistema .invalido select")?.focus(); return; }
+  const dados = {
+    id: editando?.id, tipo, pasta_id: pastaId, nome, categoria_id: cat,
+    url: pasta ? null : urlSegura(url),
+    descricao: $("#fDesc").value.trim(),
+    somente_rede_estado: !pasta && $("#fRede").checked,
+    responsavel_nome: pasta ? "" : $("#fRespNome").value.trim(),
+    responsavel_contato: pasta ? "" : $("#fRespContato").value.trim(),
+    icone: escolha.icone, cor: escolha.cor
+  };
+  const b = $("#btnSalvarSis"); b.disabled = true;
+  try {
+    await api.salvarSistema(dados);
+    $("#dlgSistema").close(); await recarregar();
+    const destino = pastaId ? est.sistemas.find(p => p.id === pastaId) : null;
+    toast(editando ? "Alterações salvas." : (pasta ? "Pasta criada." : "Link cadastrado" + (destino && est.pasta !== pastaId ? " na pasta " + destino.nome : "") + "."), "check");
+  } catch (err) { $("#sisErro").textContent = err.message; $("#sisErro").classList.remove("oculto"); }
+  finally { b.disabled = false; }
+});
+$("#btnNovo").addEventListener("click", () => abrirFormSistema(null, "link"));
+$("#btnNovaPasta").addEventListener("click", () => abrirFormSistema(null, "pasta"));
+
+/* ================= Confirmação ================= */
+function confirmar(titulo, texto, rotulo = "Confirmar") {
+  return new Promise(res => {
+    const d = $("#dlgConfirma");
+    $("#confTitulo").textContent = titulo; $("#confTexto").textContent = texto; $("#confSim").textContent = rotulo;
+    const fim = (v) => { d.close(); $("#confSim").onclick = $("#confNao").onclick = null; res(v); };
+    $("#confSim").onclick = () => fim(true); $("#confNao").onclick = () => fim(false);
+    d.oncancel = () => fim(false);
+    d.showModal(); $("#confNao").focus();
+  });
+}
+
+async function excluir(s) {
+  if (!s) return;
+  const n = ehPasta(s) ? filhosDe(s.id).length : 0;
+  const texto = ehPasta(s)
+    ? "A pasta “" + s.nome + "”" + (n ? " e " + plural(n, "link", "links") + " dentro dela irão" : " irá") + " para a lixeira. Ao restaurar a pasta, os links voltam junto."
+    : "“" + s.nome + "” sairá do Portal de Links e irá para a lixeira. Você pode restaurá-lo depois.";
+  if (!(await confirmar(ehPasta(s) ? "Excluir pasta" : "Excluir link", texto, "Mover para a lixeira"))) return;
+  try {
+    await api.excluirSistema(s.id); await recarregar();
+    toast(ehPasta(s) ? "Pasta movida para a lixeira." : "Link movido para a lixeira.", "trash-2");
+  } catch (err) { toast(err.message, "triangle-alert"); }
+}
+
+/* ================= Lixeira ================= */
+function renderLixeira() {
+  const itens = est.sistemas.filter(s => s.excluido_em).sort((a, b) => b.excluido_em.localeCompare(a.excluido_em));
+  $("#lixLista").innerHTML = itens.length ? itens.map(s => {
+    const n = ehPasta(s) ? est.sistemas.filter(f => f.pasta_id === s.id && !f.excluido_em).length : 0;
+    const pai = pastaDe(s);
+    const det = ehPasta(s) ? "Pasta com " + plural(n, "link", "links") + " · " : (pai ? "Link da pasta " + esc(pai.nome) + " · " : "");
+    return "<li>" + ladrilho(s) + '<div class="info"><strong>' + esc(s.nome) + "</strong><small>" + det + "Excluído em " + fmtData(s.excluido_em) + (s.atualizado_por ? " por " + esc(s.atualizado_por) : "") + '</small></div><button class="btn btn-sec" type="button" data-restaurar="' + esc(s.id) + '">' + svg("rotate-ccw") + "Restaurar</button></li>";
+  }).join("") : '<li><div class="info"><strong>A lixeira está vazia.</strong></div></li>';
+}
+$("#btnLixeira").addEventListener("click", () => { renderLixeira(); $("#dlgLixeira").showModal(); });
+$("#lixLista").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-restaurar]"); if (!b) return;
+  const s = est.sistemas.find(x => x.id === b.dataset.restaurar), pai = s && pastaDe(s);
+  if (pai && pai.excluido_em) { toast("Restaure primeiro a pasta “" + pai.nome + "”.", "triangle-alert"); return; }
+  b.disabled = true;
+  try { await api.excluirSistema(s.id, true); await recarregar(); renderLixeira(); toast(ehPasta(s) ? "Pasta restaurada com seus links." : "Link restaurado.", "rotate-ccw"); }
+  catch (err) { toast(err.message, "triangle-alert"); b.disabled = false; }
+});
+
+/* ================= Categorias ================= */
+function limparFormCat() {
+  $("#catId").value = ""; $("#catNome").value = ""; $("#catDesc").value = ""; $("#catOrdem").value = 100;
+  $("#catSalvar span").textContent = "Adicionar"; $("#catCancelar").classList.add("oculto"); $("#catErro").classList.add("oculto");
+}
+function renderCategorias() {
+  $("#catLista").innerHTML = est.categorias.length ? est.categorias.map(c => {
+    const n = est.sistemas.filter(s => s.categoria_id === c.id && !s.excluido_em).length;
+    return '<li><div class="info"><strong>' + esc(c.nome) + "</strong><small>Ordem " + esc(c.ordem) + " · " + n + " item(ns)" + (c.descricao ? " · " + esc(c.descricao) : "") + '</small></div><button class="btn btn-fantasma btn-icone" type="button" data-cat-editar="' + esc(c.id) + '" title="Editar" aria-label="Editar categoria">' + svg("pencil") + '</button><button class="btn btn-fantasma btn-icone" type="button" data-cat-excluir="' + esc(c.id) + '" title="Excluir" aria-label="Excluir categoria">' + svg("trash-2") + "</button></li>";
+  }).join("") : '<li><div class="info"><strong>Nenhuma categoria.</strong><small>Crie a primeira acima.</small></div></li>';
+}
+function abrirCategorias() { limparFormCat(); renderCategorias(); $("#dlgCategorias").showModal(); }
+$("#btnCategorias").addEventListener("click", abrirCategorias);
+$("#catCancelar").addEventListener("click", limparFormCat);
+$("#formCat").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const nome = $("#catNome").value.trim();
+  if (nome.length < 2) { $("#catErro").textContent = "Informe o nome da categoria."; $("#catErro").classList.remove("oculto"); return; }
+  try {
+    await api.salvarCategoria({ id: $("#catId").value || undefined, nome, descricao: $("#catDesc").value.trim(), ordem: parseInt($("#catOrdem").value, 10) || 0 });
+    await recarregar(); limparFormCat(); renderCategorias(); toast("Categoria salva.", "check");
+  } catch (err) { $("#catErro").textContent = err.message; $("#catErro").classList.remove("oculto"); }
+});
+$("#catLista").addEventListener("click", async (e) => {
+  const ed = e.target.closest("[data-cat-editar]"), ex = e.target.closest("[data-cat-excluir]");
+  if (ed) {
+    const c = est.categorias.find(x => x.id === ed.dataset.catEditar);
+    $("#catId").value = c.id; $("#catNome").value = c.nome; $("#catDesc").value = c.descricao || ""; $("#catOrdem").value = c.ordem;
+    $("#catSalvar span").textContent = "Salvar"; $("#catCancelar").classList.remove("oculto"); $("#catNome").focus();
+  }
+  if (ex) {
+    const c = est.categorias.find(x => x.id === ex.dataset.catExcluir);
+    const n = est.sistemas.filter(s => s.categoria_id === c.id).length;
+    if (n) { $("#catErro").textContent = "Não é possível excluir “" + c.nome + "”: há " + n + " item(ns) nela (incluindo a lixeira). Mova-os para outra categoria antes."; $("#catErro").classList.remove("oculto"); return; }
+    $("#dlgCategorias").close();
+    const ok = await confirmar("Excluir categoria", "A categoria “" + c.nome + "” será excluída.", "Excluir");
+    if (ok) { try { await api.excluirCategoria(c.id); await recarregar(); toast("Categoria excluída.", "trash-2"); } catch (err) { toast(err.message, "triangle-alert"); } }
+    abrirCategorias();
+  }
+});
+
+/* ================= Histórico ================= */
+const ROTULOS = { pasta_id: "pasta", nome: "nome", url: "endereço", descricao: "descrição", categoria_id: "categoria", icone: "ícone", cor: "cor", somente_rede_estado: "aviso de rede", responsavel_nome: "responsável", responsavel_contato: "contato", ordem: "ordem" };
+const ACOES = { INCLUSAO: "Inclusão", ALTERACAO: "Alteração", EXCLUSAO: "Exclusão", RESTAURACAO: "Restauração", EXCLUSAO_DEFINITIVA: "Exclusão" };
+$("#btnHistorico").addEventListener("click", async () => {
+  const corpo = $("#histCorpo");
+  corpo.innerHTML = '<div class="carregando" style="margin:0"><div style="height:60px"></div></div>';
+  $("#dlgHistorico").showModal();
+  try {
+    const regs = await api.auditoria();
+    if (!regs.length) { corpo.innerHTML = '<div class="vazio">' + svg("history") + "<strong>Nenhuma alteração registrada ainda.</strong></div>"; return; }
+    corpo.innerHTML = '<div class="tabela-wrap"><table><thead><tr><th>Data e hora</th><th>Usuário</th><th>Ação</th><th>Item</th><th>O que mudou</th></tr></thead><tbody>' +
+      regs.map(r => {
+        const ref = r.depois || r.antes || {};
+        const tipo = r.tabela === "categorias" ? "Categoria" : (ref.tipo === "pasta" ? "Pasta" : "Link");
+        let mud = "";
+        if (r.acao === "ALTERACAO" && r.antes && r.depois) mud = Object.keys(ROTULOS).filter(k => k in r.depois && JSON.stringify(r.antes[k] ?? "") !== JSON.stringify(r.depois[k] ?? "")).map(k => ROTULOS[k]).join(", ");
+        return "<tr><td style=\"white-space:nowrap\">" + fmtData(r.em) + "</td><td>" + esc(r.usuario_email) + '</td><td><span class="tag-acao tag-' + esc(r.acao) + '">' + esc(ACOES[r.acao] || r.acao) + "</span></td><td><strong>" + esc(ref.nome || "") + '</strong><br><span class="mudancas">' + tipo + '</span></td><td class="mudancas">' + esc(mud || "") + "</td></tr>";
+      }).join("") + "</tbody></table></div>";
+  } catch (err) { corpo.innerHTML = '<div class="msg-erro">' + esc(err.message) + "</div>"; }
+});
+
+/* ================= Início ================= */
+$$("dialog").forEach(d => d.addEventListener("click", (e) => { if (e.target === d) d.close(); }));
+pintarIcones();
+if (DEMO) $("#avisoDemo").classList.remove("oculto");
+(async () => {
+  try { est.usuario = await api.sessao(); if (est.usuario && !est.usuario.admin) { await api.sair(); est.usuario = null; } } catch { est.usuario = null; }
+  atualizarTopo();
+  lerEndereco();
+  await recarregar();
+})();
+})();
+</script>
+</body>
+</html>

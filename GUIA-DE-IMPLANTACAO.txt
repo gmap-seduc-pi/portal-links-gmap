@@ -1,0 +1,125 @@
+PORTAL DE LINKS DA GMAP / SEDUC-PI
+Guia de implantação (Supabase + GitHub Pages)
+=====================================================================
+
+O QUE TEM NESTA PASTA
+---------------------------------------------------------------------
+index.html .................. o Portal de Links (tela, estilos e lógica)
+config.js ................... onde você cola a URL e a chave do Supabase
+supabase/schema.sql ......... cria tabelas, segurança, auditoria e contador
+assets/ ..................... assinatura SEDUC/Governo, fonte Montserrat,
+                              ícones e biblioteca do Supabase (tudo local,
+                              sem depender de CDN)
+
+TESTAR ANTES (MODO DEMONSTRAÇÃO)
+---------------------------------------------------------------------
+Com o config.js vazio, o Portal de Links roda em modo demonstração: os
+dados de exemplo ficam só no navegador. A forma mais simples de testar
+é publicar no GitHub Pages (passo 4) ainda sem configurar o Supabase.
+Na área do administrador use qualquer e-mail e a senha: demo
+
+PASSO 1. CRIAR O PROJETO NO SUPABASE
+---------------------------------------------------------------------
+Crie um projeto exclusivo para o Portal de Links da GMAP. Não use um
+projeto que já atenda outro sistema: cada sistema deve ter seu próprio
+banco, usuários e permissões.
+Recomendado: crie a conta Supabase com um e-mail institucional da
+GMAP, para o Portal de Links não depender de uma conta pessoal.
+
+PASSO 2. CRIAR AS TABELAS
+---------------------------------------------------------------------
+Supabase > SQL Editor > New query > cole todo o conteúdo de
+supabase/schema.sql > Run. Deve terminar sem erro.
+
+PASSO 3. CRIAR OS ADMINISTRADORES
+---------------------------------------------------------------------
+a) Authentication > Sign In / Providers > desative "Allow new users
+   to sign up" (ninguém se cadastra sozinho).
+b) Authentication > Users > Add user > Create new user
+   Informe e-mail e senha e marque "Auto Confirm User".
+c) Copie o "User UID" de cada usuário criado e rode no SQL Editor:
+
+   insert into public.administradores (user_id, nome, email) values
+     ('UID-DA-PESSOA-1', 'Nome da pessoa 1', 'email1@seduc.pi.gov.br'),
+     ('UID-DA-PESSOA-2', 'Nome da pessoa 2', 'email2@seduc.pi.gov.br')
+   on conflict (user_id) do update
+     set nome = excluded.nome, email = excluded.email, ativo = true;
+
+   Atenção: um único "values", linhas separadas por vírgula e um único
+   ponto e vírgula no final. Pode rodar de novo sem dar erro.
+   Recomendado: 2 a 3 administradores, cada um com conta própria
+   (conta compartilhada impede saber quem alterou o quê no histórico).
+
+Para desativar um administrador sem apagar o histórico:
+   update public.administradores set ativo = false where email = '...';
+
+PASSO 4. PUBLICAR NO GITHUB PAGES
+---------------------------------------------------------------------
+a) Crie um repositório (ex.: portal-links-gmap) e envie TODOS os
+   arquivos desta pasta, mantendo as subpastas.
+b) Settings > Pages > Source: "Deploy from a branch" > main / root.
+c) Em 1 a 2 minutos o endereço fica ativo:
+   https://SEU-USUARIO.github.io/portal-links-gmap/
+
+PASSO 5. LIGAR O PORTAL DE LINKS AO SUPABASE
+---------------------------------------------------------------------
+Supabase > Project Settings > API. Copie "Project URL" e a chave
+"anon public" para o config.js. Envie o config.js atualizado ao
+repositório. Pronto: o aviso de modo demonstração some e os dados de
+exemplo deixam de aparecer (o banco começa só com as 4 categorias).
+NUNCA use a chave "service_role" no config.js.
+
+COMO FUNCIONA NO DIA A DIA
+---------------------------------------------------------------------
+- A equipe abre o Portal de Links sem login, busca e clica.
+- Cada clique soma 1 no contador; a seção "Mais acessados" aparece
+  quando há pelo menos 3 links acessados.
+- Administrador entra pelo botão "Área do administrador" e pode:
+  cadastrar links e pastas, editar, excluir (vai para a lixeira),
+  restaurar, gerenciar categorias e consultar o histórico.
+- Todo cadastro, alteração, exclusão e restauração fica registrado
+  na tabela auditoria (quem, quando, antes e depois). O Portal de
+  Links não permite apagar esse registro.
+- Categoria só pode ser excluída quando não tem nenhum link ou pasta
+  (nem na lixeira).
+
+PASTAS DE LINKS
+---------------------------------------------------------------------
+- Use "Nova pasta" para agrupar links parecidos (ex.: Auditorias).
+  Na página inicial a pasta aparece como um único cartão.
+- Estrutura de um nível só: Categoria > Pasta > Links. Não existe
+  pasta dentro de pasta, para a navegação nunca ficar a mais de um
+  clique do início.
+- Para pôr um link numa pasta, cadastre-o de dentro da pasta ou
+  escolha a pasta no campo "Guardar na pasta". O link passa a usar
+  a categoria da pasta.
+- Para voltar ao início: botão "Voltar ao início", "Início" na
+  trilha do topo, clique na marca, tecla Esc ou o botão Voltar do
+  navegador.
+- A busca da página inicial também procura dentro das pastas e
+  mostra em qual pasta cada link está.
+- Excluir uma pasta leva a pasta e seus links para a lixeira.
+  Restaurar a pasta traz os links de volta.
+- Cada pasta tem endereço próprio (termina em #pasta-...), então dá
+  para mandar o link direto de uma pasta para um colega.
+
+ATUALIZAÇÕES FUTURAS DO BANCO
+---------------------------------------------------------------------
+Se uma versão nova do schema.sql for entregue, basta rodar o arquivo
+inteiro outra vez no SQL Editor. Ele foi feito para ser executado
+mais de uma vez sem perder dados.
+
+CUIDADOS IMPORTANTES
+---------------------------------------------------------------------
+1. Nunca cadastre senhas, logins ou dados pessoais na descrição ou no
+   contato. O catálogo de links pode ser lido por qualquer pessoa que
+   tenha o endereço do Portal de Links.
+2. Os endereços de sistemas internos (ex.: Redmine) ficam visíveis,
+   mas continuam inacessíveis fora da rede do Estado. Se a gestão
+   considerar até os endereços sensíveis, dá para exigir login também
+   para visualizar (ajuste simples nas regras do schema.sql).
+3. O projeto gratuito do Supabase pausa após 7 dias sem uso. Como o
+   Portal de Links é acessado todo dia, isso não deve ocorrer; se
+   ocorrer, basta reativar no painel.
+4. Exclusão definitiva, se um dia for necessária, é feita direto no
+   Supabase (Table Editor), e também fica registrada na auditoria.
