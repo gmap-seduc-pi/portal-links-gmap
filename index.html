@@ -510,7 +510,17 @@ const ICONES_ESCOLHA = ["folder","globe","file-text","folder-open","package","bo
 const CORES = ["#034ea2","#007932","#ef4123","#fdb913","#231f20","#0b7285","#6741a3","#5b6472"];
 
 /* ================= Camada de dados ================= */
-const CFG = window.PORTAL_CONFIG || {};
+const CFG = Object.assign({}, window.PORTAL_CONFIG || {});
+// Aceita o endereço do Supabase em formatos comuns e deixa só a raiz
+// (ex.: ".../rest/v1/" ou o link do painel supabase.com/dashboard/project/<id>)
+(function normalizarUrl() {
+  const bruto = String(CFG.SUPABASE_URL || "").trim();
+  if (!bruto) return;
+  const painel = bruto.match(/supabase\.com\/dashboard\/project\/([a-z0-9]+)/i);
+  if (painel) { CFG.SUPABASE_URL = "https://" + painel[1] + ".supabase.co"; return; }
+  try { CFG.SUPABASE_URL = new URL(/^https?:\/\//i.test(bruto) ? bruto : "https://" + bruto).origin; } catch {}
+  CFG.SUPABASE_ANON_KEY = String(CFG.SUPABASE_ANON_KEY || "").trim();
+})();
 const DEMO = !(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY);
 
 const memoria = {};
@@ -617,6 +627,8 @@ const nuvem = (() => {
     if (/row-level security|permission denied/i.test(m)) return "Seu usuário não tem permissão para esta ação.";
     if (/duplicate key.*categorias_nome/i.test(m)) return "Já existe uma categoria com esse nome.";
     if (/Failed to fetch|NetworkError/i.test(m)) return "Sem conexão com o servidor. Verifique a internet e tente de novo.";
+    if (/Invalid path specified/i.test(m)) return "Endereço do Supabase incorreto no config.js. Use só a raiz, no formato https://SEU-PROJETO.supabase.co";
+    if (/Invalid API key|No API key/i.test(m)) return "Chave do Supabase incorreta no config.js. Use a chave anon public do mesmo projeto.";
     return m || "Erro inesperado.";
   }
   async function perfil(user) {
@@ -1110,7 +1122,19 @@ $("#btnHistorico").addEventListener("click", async () => {
 });
 
 /* ================= Início ================= */
-$$("dialog").forEach(d => d.addEventListener("click", (e) => { if (e.target === d) d.close(); }));
+// Fechar pelo fundo escuro: só quando o clique começa E termina no fundo.
+// Arrastar para selecionar texto e soltar fora da janela não fecha mais.
+// Janelas com formulário nunca fecham pelo fundo (evita perder o que foi digitado).
+const SEM_FECHAR_PELO_FUNDO = ["dlgSistema", "dlgLogin", "dlgConfirma"];
+$$("dialog").forEach(d => {
+  let comecouNoFundo = false;
+  d.addEventListener("pointerdown", (e) => { comecouNoFundo = e.target === d; });
+  d.addEventListener("click", (e) => {
+    const fundo = comecouNoFundo && e.target === d;
+    comecouNoFundo = false;
+    if (fundo && !SEM_FECHAR_PELO_FUNDO.includes(d.id)) d.close();
+  });
+});
 pintarIcones();
 if (DEMO) $("#avisoDemo").classList.remove("oculto");
 (async () => {
